@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use App\Repository\UserRespository;
 use App\Http\Requests\AddUserRequest;
 
 class AddUserController extends Controller
 {
     protected $user;
+
     public function __construct(UserRespository $user)
     {
         $this->user = $user;
     }
 
-    public function create()
+    public function create(): View
     {
         return view('create');
     }
@@ -21,7 +23,7 @@ class AddUserController extends Controller
     public function store(AddUserRequest $request)
     {
         $this->user->add($request);
-        return back();
-    }
 
+        return back()->with('message', 'User added!');
+    }
 }
